@@ -1,0 +1,32 @@
+import pandas as pd
+
+# read the first excel file, skipping the first row (header)
+df1 = pd.read_excel('file1.xlsx', skiprows=1)
+
+# read the second excel file, skipping the first row (header)
+df2 = pd.read_excel('file2.xlsx', skiprows=1)
+
+# create an empty dataframe to store the matching values
+matching_values = pd.DataFrame()
+
+# loop through the columns in the first dataframe
+for col1 in df1.columns:
+    # loop through the columns in the second dataframe
+    for col2 in df2.columns:
+        # check if the column names match
+        if col1 == col2:
+            # get the matching values from both dataframes
+            values1 = df1[col1].dropna()
+            values2 = df2[col2].dropna()
+            # find the intersection of the two sets of values
+            matching = values1[values1.isin(values2)]
+            # add the matching values to the new dataframe
+            matching_values[col1] = matching
+            
+# loop through the columns in the second dataframe
+for col2 in df2.columns:
+    if not col2 in matching_values.columns:
+        matching_values[col2] = 'Not in master file'
+
+# print the new dataframe
+print(matching_values)
