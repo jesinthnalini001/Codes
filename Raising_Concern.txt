@@ -1,0 +1,20 @@
+//Create an array of sensitive words that you want to replace.
+var sensitiveWords = ["badword1", "badword2", "badword3"];
+
+//Use the Qualtrics JavaScript API to get all the input elements of the text entry questions in the survey.
+var inputs = document.querySelectorAll("input[type='text']");
+
+//Use a loop to iterate over the input elements and add an event listener to each one.
+for (var i = 0; i < inputs.length; i++) {
+    var input = inputs[i];
+    // Uncomment the following line and replace "QR~QIDx~y" with the specific question ID you want to target
+    // if(input.id !== "QR~QIDx~y") continue; 
+    input.addEventListener("input", function(event) {
+        var input = event.target;
+	    for (var i = 0; i < sensitiveWords.length; i++) {
+            var word = sensitiveWords[i];
+            if (input.value.includes(word)) {
+                input.value = input.value.replace(word, "**");
+            }
+        }
+  });
