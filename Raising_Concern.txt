@@ -11,10 +11,17 @@ for (var i = 0; i < inputs.length; i++) {
     // if(input.id !== "QR~QIDx~y") continue; 
     input.addEventListener("input", function(event) {
         var input = event.target;
-	    for (var i = 0; i < sensitiveWords.length; i++) {
+        // Create Embedded Data field name
+        var EDName = "ED_"+input.id;
+        // Store original text in a variable
+        var originalText = input.value;
+        for (var i = 0; i < sensitiveWords.length; i++) {
             var word = sensitiveWords[i];
-            if (input.value.includes(word)) {
-                input.value = input.value.replace(word, "**");
+            if (originalText.includes(word)) {
+                input.value = originalText.replace(word, "**");
             }
         }
-  });
+        // Set the original text to embedded data
+        Qualtrics.SurveyEngine.setEmbeddedData(EDName, originalText);
+    });
+}
