@@ -42,8 +42,8 @@ Give credit here.
 
 
 ## Contact
-Created by [@githubusername] - feel free to contact me!
-
+Created by [@jesinthnalini001] - feel free to contact me!
+https://github.com/jesinthnalini001/
 
 <!-- Optional -->
 <!-- ## License -->
