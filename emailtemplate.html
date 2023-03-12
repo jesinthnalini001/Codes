@@ -6,57 +6,43 @@
 	<title>Qualtrics Survey Invitation</title>
 	<style type="text/css">
 		.button {
-			display: inline-block;
 			background-color: #007bff;
-			color: #fff;
+			border-radius: 5px;
+			color: #ffffff;
+			display: inline-block;
 			font-size: 16px;
 			font-weight: bold;
-			padding: 10px 20px;
-			border-radius: 5px;
-			text-decoration: none;
-			position: relative;
-			overflow: hidden;
-			border: none;
 			line-height: 1;
-			z-index: 1;
-			transition: all .2s ease-out;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			-webkit-text-size-adjust: none;
+			mso-hide: all;
+			v-text-anchor: middle;
+			width: auto;
 		}
 		.button:hover {
 			background-color: #0056b3;
-			color: #fff;
+			color: #ffffff;
 			box-shadow: 0 5px 5px rgba(0, 0, 0, .15);
 		}
-		.button:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #007bff;
-			border-radius: 5px;
-			opacity: 0;
-			transition: all .2s ease-out;
-			z-index: -1;
-		}
-		.button:hover:before {
-			opacity: 1;
-		}
 	</style>
-
 </head>
 <body>
-	<div class="container">
-		<h1>Qualtrics Survey Invitation</h1>
-		<p>Dear [Recipient],</p>
-		<p>We hope this email finds you well. We would like to invite you to participate in a survey that will help us improve our products and services. Your feedback is incredibly valuable to us, and we appreciate any time you can spare to share your thoughts.</p>
-		<p>To participate in the survey, please click on the following link:</p>
-		<p><a href="https://yourcustomsurveylink.com" style="display:inline-block;padding:15px 25px;background-color:#007bff;color:#fff;text-decoration:none;border-radius:5px;-webkit-text-size-adjust:none;mso-hide:all;v:rect;background-color:#007bff;" target="_blank"><span style="color:#fff;font-size:16px;font-weight:bold;">Take Survey</span></a>
-</p>
-		<p>The survey should take approximately [time estimate] to complete. All responses will be kept strictly confidential and will only be used for research purposes.</p>
-		<p>Thank you for your time and valuable input. If you have any questions or concerns, please do not hesitate to reach out to us.</p>
-		<p>Best regards,</p>
-		<p>[Your Name]</p>
-	</div>
+	<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td>
+				<h1>Qualtrics Survey Invitation</h1>
+				<p>Dear [Recipient],</p>
+				<p>We hope this email finds you well. We would like to invite you to participate in a survey that will help us improve our products and services. Your feedback is incredibly valuable to us, and we appreciate any time you can spare to share your thoughts.</p>
+				<p>To participate in the survey, please click on the following link:</p>
+				<p style="margin-top: 20px;"><a href="[survey link]" class="button" style="background-color: #007bff; border-radius: 5px; color: #ffffff; display: inline-block; font-size: 16px; font-weight: bold; line-height: 1; padding: 10px 20px; text-align: center; text-decoration: none; -webkit-text-size-adjust: none; mso-hide: all; v-text-anchor: middle; width: auto;" target="_blank" rel="noopener noreferrer" v:rect=""><span style="color: #ffffff; font-size: 16px; font-weight: bold;">Take Survey</span></a></p>
+				<p>The survey should take approximately [time estimate] to complete. All responses will be kept strictly confidential and will only be used for research purposes.</p>
+				<p>Thank you for your time and valuable input. If you have any questions or concerns, please do not hesitate to reach out to us.</p>
+				<p>Best regards,</p>
+				<p>[Your Name]</p>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
