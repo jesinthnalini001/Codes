@@ -1,0 +1,18 @@
+Qualtrics.SurveyEngine.addOnload(function()
+{
+    // Get the maximum character count for the text entry question
+    var maxLength = parseInt("${q://QID1/MaxLength}");
+
+    // Bind an event listener to the text entry question
+    jQuery("#"+this.questionId+" input[type='text']").on('input', function()
+    {
+        // Get the current length of the entered text
+        var currentLength = jQuery(this).val().length;
+
+        // Calculate the remaining character count
+        var remaining = maxLength - currentLength;
+
+        // Update the info block with the remaining character count
+        jQuery("#infoBlock").html("Characters remaining: " + remaining);
+    });
+});
