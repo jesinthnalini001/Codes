@@ -1,0 +1,26 @@
+import pandas as pd
+
+# read the original CSV file
+df = pd.read_csv("original_file.csv")
+
+# get the number of rows in the file
+num_rows = df.shape[0]
+
+# calculate the number of files needed
+num_files = (num_rows // 500) + 1
+
+# loop through the number of files
+for i in range(num_files):
+    # calculate the starting and ending row index for the current file
+    start_idx = i * 500
+    end_idx = start_idx + 500
+    
+    # create a new DataFrame with the current slice of rows
+    df_slice = df[start_idx:end_idx]
+    
+    # add the header to the first file
+    if i == 0:
+        df_slice.to_csv(f"output_{i}.csv", index=False)
+    else:
+        # write the current slice of rows to a new file
+        df_slice.to_csv(f"output_{i}.csv", index=False, header=None)
