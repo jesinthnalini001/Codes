@@ -1,0 +1,24 @@
+The objective of this study is to achieve the following steps:
+
+Collect and integrate employee ID, demographic data, and intent to stay data from the engagement survey. Additionally, gather employee data from the exit survey for comparison purposes.
+
+Match the employee data between the engagement survey and the exit survey to identify common individuals who participated in both surveys. This matching process will allow for a direct comparison and analysis of the intent to stay data with the leaving data.
+
+Analyze the matched data to identify and assess the relationship between employees' expressed intent to stay, as indicated in the engagement survey, and their subsequent decision to leave the organization, as reported in the exit survey. The goal is to determine if a significant association exists between these two factors.
+
+Conduct a comprehensive examination of the demographic data within the matched dataset to identify any significant patterns or correlations. This analysis will involve exploring demographic factors such as age, gender, tenure, etc., to understand if there are any demographic characteristics that may influence the relationship between intent to stay and leaving trends.
+
+Utilize the insights gained from the analysis to develop a predictive model for attrition. By leveraging the identified patterns and correlations, the study aims to predict the attrition of non-matched engagement survey data. This predictive analysis will provide an understanding of the future expected attrition within the organization.
+
+Overall, these steps aim to investigate the relationship between engagement survey's intent to stay data and exit survey's leaving data, explore demographic patterns, and develop predictive insights to enhance the organization's understanding of employee attrition. The findings will contribute to informed decision-making and the formulation of effective retention strategies.
+
+
+
+The objective of this study is twofold. Firstly, it aims to investigate the potential relationship between engagement survey's "intent to stay" data and exit survey's "leaving" data to determine if there is a significant association between employees' expressed intent to stay and their subsequent decision to leave the organization. Secondly, this study seeks to perform a demographic comparison between the survey data to identify any patterns or correlations between specific demographic factors (such as age, gender, tenure, etc.) and the intent to stay and leaving trends. By conducting this analysis, the study aims to gain insights into whether demographic variables play a role in shaping the relationship between engagement and exit survey data. The findings will provide valuable information for understanding the complexities of employee retention and help inform targeted strategies for improving organizational effectiveness and reducing turnover rates, particularly among specific demographic groups.
+
+
+
+
+
+
+Regenerate response
