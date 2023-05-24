@@ -1,0 +1,14 @@
+I want to mention the major achievement is we wee able to handle the entire project ourself. I must acknowledge that we got assistance from Qualtrics support team and Simon by Success check and answering few of our queries. That was useful. But compared to September, Qualtrics team has been relatively reduced this time.
+
+My primary focus was on surveys, while Sadeesh was primarily focused on the dashboard. We supported each other by conducting checks in our respective areas. Sadeesh checked survey link, while I performing checks in the dashboard data.
+
+
+We have compiled a comprehensive list of accomplishments that we consider to be our achievements in both the survey and dashboard. Among them, one notable success is attributed to Sadeesh's dedication in reworking the dashboard data. 
+
+We received few back and forth changes. I believe it is perfectly acceptable, because only while testing the survey different perspective will ariseThis effort significantly reduced the number of rows, resulting in a substantial decrease in reindexing time from 90 minutes to just 30 minutes. In fact, during our TAM call yesterday, Simon introduced a new term called "import." I'm genuinely excited about this development because if it works, it could significantly reduce the effort required to create surveys. However, we will need to conduct sufficient research and development before reaching any conclusions.
+
+My real surprise is accessibility. We received a feedback of 37 points. Good that survey is accesibile for eveyone. We're unable to handle everything and convinced them we will ensure those points are taken care in September. We started working with the team now.
+
+The progress bar has shown significant improvement compared to September.
+
+Firstly, we mistakenly sent out the Europe invite earlier than planned, and secondly, there were errors in updating the German text. To prevent such issues, we need to make sure the survey is double-checked before it is delivered. The key lesson learned is to avoid making last-minute changes right before the survey is launched.
