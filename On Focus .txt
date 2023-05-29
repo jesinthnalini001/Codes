@@ -1,0 +1,43 @@
+/* On Focus */
+/* Styles for when a SingleAnswer label is checked or focused */
+.Skin label.SingleAnswer.q-checked {
+    color: #006ee3 !important;
+    outline: 2px solid #006ee3 !important;
+}
+
+/* Styles for when hovering over a SingleAnswer label */
+.Skin label.SingleAnswer:hover {
+    font-weight: bold !important;
+    background: #005aba !important;
+    color: #ffffff !important;
+}
+
+/* Styles for when a SingleAnswer label is checked or focused */
+.Skin label.SingleAnswer.q-checked {
+    color: #006ee3 !important;
+    outline: 2px solid #006ee3 !important;
+}
+
+/* Styles for when hovering over a MultiAnswer label */
+.Skin label.MultiAnswer:hover {
+    font-weight: bold !important;
+    background: #005aba !important;
+    color: #ffffff !important;
+}
+
+/* Styles for when a label is focused */
+.Skin label.q-focused {
+    font-weight: bold !important;
+    color: #ffffff !important;
+}
+
+/* Explanation:
+- The ".SingleAnswer.q-checked" styles apply when a SingleAnswer label is checked or focused. It sets the color to a specific blue (#006ee3) and adds an outline.
+- The ".SingleAnswer:hover" styles apply when hovering over a SingleAnswer label. It sets the font weight, background color, and text color.
+- The ".MultiAnswer:hover" styles apply when hovering over a MultiAnswer label. It sets the font weight, background color, and text color.
+- The ".q-focused" styles apply when any label is focused. It sets the font weight and text color.
+- The "!important" rule ensures that these styles override any other conflicting styles in the survey theme.
+*/
+
+/* Note: If you need to modify these styles, you can change the color codes, adjust the properties, or add more specific selectors as needed. */
+/* On Focus end */
