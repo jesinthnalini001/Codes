@@ -1,0 +1,31 @@
+Qualtrics.SurveyEngine.addOnload(function() {
+  var q = jQuery(this.questionContainer);
+  var qobj = this;
+  var scid = q.find("[type=radio]:checked").attr("choiceid");
+
+  // Click event listener for mouse clicks
+  q.find("[type=radio]").click(function() {
+    var cid = this.getAttribute("choiceid");
+    
+    if (cid === scid) {
+      qobj.setChoiceValue(cid, false);
+      scid = 0;
+    } else {
+      scid = cid;
+    }
+  });
+
+  // Keydown event listener for keyboard input
+  q.find("[type=radio]").keydown(function(event) {
+    // Check if the Spacebar key (keyCode 32) or Enter key (keyCode 13) is pressed
+    if (event.keyCode === 32 || event.keyCode === 13) {
+      var cid = this.getAttribute("choiceid");
+      // Toggle the selection state of the radio button
+      qobj.setChoiceValue(cid, !qobj.getSelectedChoices().includes(cid));
+      // Update the stored choice id based on the new selection state
+      scid = qobj.getSelectedChoices().includes(cid) ? cid : 0;
+      // Prevent the default behavior of the Spacebar or Enter key
+      event.preventDefault();
+    }
+  });
+});
