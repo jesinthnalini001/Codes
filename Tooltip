@@ -1,52 +1,19 @@
-<!-- Add a button with a tooltip -->
-<button class="tooltip-btn" aria-describedby="tooltip">Hover Me</button>
-
-<!-- Add the tooltip content -->
-<div id="tooltip" class="tooltip-content" role="tooltip" aria-hidden="true">
-  This is a tooltip example.
-</div>
-
-
-
-/* Style the tooltip container */
-.tooltip-content {
-  position: absolute;
-  background-color: #000;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 1;
-}
-
-/* Style the button when hovered */
-.tooltip-btn:hover + .tooltip-content,
-.tooltip-content:focus {
-  opacity: 1;
-}
-
-/* Position the tooltip relative to the button */
-.tooltip-btn {
-  position: relative;
-}
-
-/* Hide the tooltip content from screen readers until needed */
-.tooltip-content[aria-hidden="true"] {
-  clip: rect(1px, 1px, 1px, 1px);
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-}
-
-
-// Optional: Show/hide tooltip on click
-var tooltipBtn = document.querySelector('.tooltip-btn');
-var tooltipContent = document.getElementById('tooltip');
-
-tooltipBtn.addEventListener('click', function() {
-  var isVisible = tooltipContent.getAttribute('aria-hidden') === 'false';
-  tooltipContent.setAttribute('aria-hidden', !isVisible);
+Qualtrics.SurveyEngine.addOnReady(function() {
+  jQuery("#button").click(function() {
+    jQuery("#infodiv").toggle();
+    var isVisible = jQuery("#infodiv").is(":visible");
+    if (isVisible) {
+      jQuery("#button").text("Hide");
+    } else {
+      jQuery("#button").text("Show");
+    }
+  });
+  
+  // Check initial visibility and update button text
+  var isVisible = jQuery("#infodiv").is(":visible");
+  if (isVisible) {
+    jQuery("#button").text("Hide");
+  } else {
+    jQuery("#button").text("Show");
+  }
 });
