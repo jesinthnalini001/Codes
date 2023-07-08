@@ -1,0 +1,45 @@
+var parent = jQuery('#parent');
+var popup = jQuery('#tooltip-text');
+var closeBtn = jQuery('#btn-closeid');
+
+parent.on('mouseover focus', function() {
+  popup.css('display', 'block');
+});
+
+parent.on('blur', function() {
+  popup.css('display', 'none');
+});
+
+// Hide when ESC is pressed
+jQuery(document).on('keydown', function(e) {
+  if (e.which === 27) {
+    popup.css('display', 'none');
+  }
+});
+
+closeBtn.click(function() {
+  popup.css('display', 'none');
+});
+
+parent.attr('tabindex', '0');
+
+parent.on('keydown', function(e) {
+  if (e.which === 9) { // Tab key
+    var focusableElements = popup.find(':focusable');
+    if (focusableElements.length > 0) {
+      var firstElement = focusableElements[0];
+      if (e.shiftKey && document.activeElement === firstElement) {
+        parent.focus(); // Move focus back to parent when Shift + Tab is pressed on the first focusable element
+      }
+    }
+  }
+});
+
+parent.click(function() {
+  if (popup.css('display') === 'none') {
+    popup.css('display', 'block'); // Show the popup if it's currently hidden
+    popup.find(':focusable:first').focus(); // Move focus to the first focusable element inside the tooltip
+  } else {
+    popup.css('display', 'none'); // Hide the popup if it's currently visible
+  }
+});
