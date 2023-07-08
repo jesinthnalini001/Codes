@@ -1,6 +1,8 @@
 var parent = jQuery('#parent');
 var popup = jQuery('#tooltip-text');
 var closeBtn = jQuery('#btn-closeid');
+var title = jQuery('#tooltip-title');
+var body = jQuery('#tooltip-body');
 
 parent.on('mouseover focus', function() {
   popup.css('display', 'block');
@@ -28,8 +30,11 @@ parent.on('keydown', function(e) {
     var focusableElements = popup.find(':focusable');
     if (focusableElements.length > 0) {
       var firstElement = focusableElements[0];
+      var lastElement = focusableElements[focusableElements.length - 1];
       if (e.shiftKey && document.activeElement === firstElement) {
         parent.focus(); // Move focus back to parent when Shift + Tab is pressed on the first focusable element
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        parent.focus(); // Move focus back to parent when Tab is pressed on the last focusable element
       }
     }
   }
@@ -38,7 +43,10 @@ parent.on('keydown', function(e) {
 parent.click(function() {
   if (popup.css('display') === 'none') {
     popup.css('display', 'block'); // Show the popup if it's currently hidden
-    popup.find(':focusable:first').focus(); // Move focus to the first focusable element inside the tooltip
+    title.attr('tabindex', '0'); // Add tabindex to the title
+    closeBtn.attr('tabindex', '0'); // Add tabindex to the close button
+    body.attr('tabindex', '0'); // Add tabindex to the body
+    title.focus(); // Move focus to the title
   } else {
     popup.css('display', 'none'); // Hide the popup if it's currently visible
   }
