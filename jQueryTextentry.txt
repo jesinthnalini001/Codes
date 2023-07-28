@@ -9,7 +9,7 @@ Qualtrics.SurveyEngine.addOnload(function() {
     var input = q.find(".InputText");
 
     // Add a word count container after the text input
-    input.after("<div class='word-count-container'><span class='word-count-label'>Word count:</span><span class='wordCount' aria-live='polite' aria-label='Word count'>0</span><span class='maxWords'></span></div>");
+    input.after("<div class='word-count-container'><span class='word-count-label'>Word count:</span><span class='wordCount' aria-hidden='true'>0</span><span class='maxWords'></span></div>");
 
     // Find the word count display element
     var display = q.find(".wordCount");
@@ -39,20 +39,12 @@ Qualtrics.SurveyEngine.addOnload(function() {
                     el.value = el.value.replace(/(\s+)\S+$/, "$1");
                 }
             }
-            display.text(el.value.match(/\S+/g).length);
+            var wordCount = el.value.match(/\S+/g).length;
+            display.text(wordCount);
+            display.attr("aria-live", "polite"); // Announce word count changes
         } else {
             display.text("0");
+            display.attr("aria-live", "off"); // Disable aria-live if word count is zero
         }
     }
 });
-
-/* Style for the word count container */
-.word-count-container {
-    font-size: 0.8em;
-    float: right;
-}
-
-/* Style for the word count label */
-.word-count-label {
-    margin-right: 5px;
-}
