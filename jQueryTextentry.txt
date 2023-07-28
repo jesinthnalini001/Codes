@@ -17,11 +17,18 @@ Qualtrics.SurveyEngine.addOnReady(function() {
   // Get the input element using the appropriate selector
   var inputElement = document.querySelector('input[name="' + inputSelector + '"]');
 
-  inputElement.addEventListener('input', function() {
-    limited();
-  });
+  // Check if the input element exists before adding the event listener
+  if (inputElement) {
+    inputElement.addEventListener('input', function() {
+      limited();
+    });
+  }
 
   function limited() {
+    if (!inputElement) {
+      return; // Exit the function if the input element doesn't exist
+    }
+
     var curr_len = inputElement.value.length;
     var reminder = "";
 
