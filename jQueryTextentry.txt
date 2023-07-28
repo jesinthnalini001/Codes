@@ -3,8 +3,8 @@ Qualtrics.SurveyEngine.addOnload(function() {
   var $textArea = jQuery("#QR~QID616");
   var $charCountSpan = jQuery("#QID616-RemainingChars");
 
-  // Initially hide the character count off-screen
-  $charCountSpan.css({ position: "absolute", left: "-9999px" });
+  // Initially hide the character count
+  $charCountSpan.hide();
 
   $textArea.on("input", function() {
     var text = $textArea.val();
@@ -13,10 +13,14 @@ Qualtrics.SurveyEngine.addOnload(function() {
 
     if (charCount >= 10) {
       // Show the character count if 10 or more characters have been entered
-      $charCountSpan.css({ position: "static", left: "auto" });
+      $charCountSpan.show();
+      // Set the "aria-live" attribute to "polite" to announce changes to the live region
+      $charCountSpan.attr("aria-live", "polite");
     } else {
-      // Hide the character count off-screen if fewer than 10 characters have been entered
-      $charCountSpan.css({ position: "absolute", left: "-9999px" });
+      // Hide the character count if fewer than 10 characters have been entered
+      $charCountSpan.hide();
+      // Set the "aria-live" attribute to "off" to stop announcements when hidden
+      $charCountSpan.attr("aria-live", "off");
     }
 
     // Update the remaining character count
