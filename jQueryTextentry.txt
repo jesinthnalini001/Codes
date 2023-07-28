@@ -17,9 +17,9 @@ Qualtrics.SurveyEngine.addOnReady(function() {
   // Get the input element using the appropriate selector
   var inputElement = document.querySelector('input[name="' + inputSelector + '"]');
 
-  inputElement.oninput = function() {
+  inputElement.addEventListener('input', function() {
     limited();
-  };
+  });
 
   function limited() {
     var curr_len = inputElement.value.length;
