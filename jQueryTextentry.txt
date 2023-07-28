@@ -1,18 +1,58 @@
-Qualtrics.SurveyEngine.addOnload(function()
-{
-    // Get the maximum character count for the text entry question
-    var maxLength = parseInt("${q://QID1/MaxLength}");
+Qualtrics.SurveyEngine.addOnload(function() {
+    // Set the maximum number of words allowed, 0 means no limit
+    var maxWords = 0;
 
-    // Bind an event listener to the text entry question
-    jQuery("#"+this.questionId+" input[type='text']").on('input', function()
-    {
-        // Get the current length of the entered text
-        var currentLength = jQuery(this).val().length;
+    // Get the question container using jQuery
+    var q = jQuery("#" + this.questionId);
 
-        // Calculate the remaining character count
-        var remaining = maxLength - currentLength;
+    // Find the text input field within the question container
+    var input = q.find(".InputText");
 
-        // Update the info block with the remaining character count
-        jQuery("#infoBlock").html("Characters remaining: " + remaining);
+    // Add a word count container after the text input
+    input.after("<div class='word-count-container'><span class='word-count-label'>Word count:</span><span class='wordCount' aria-live='polite' aria-label='Word count'>0</span><span class='maxWords'></span></div>");
+
+    // Find the word count display element
+    var display = q.find(".wordCount");
+
+    // If there's a maximum word limit, display it
+    if (maxWords > 0) {
+        q.find('.maxWords').text("/" + maxWords);
+    }
+
+    // Count words on page load
+    countWords(input.get(0));
+
+    // Bind the countWords function to the input event
+    input.on("input", function() {
+        countWords(this);
     });
+
+    // Remove leading and trailing whitespace on blur
+    input.blur(function() {
+        this.value = this.value.trim();
+    });
+
+    function countWords(el) {
+        if (el.value.length > 0) {
+            if (maxWords > 0) {
+                if (el.value.match(/\S+/g).length > maxWords) {
+                    el.value = el.value.replace(/(\s+)\S+$/, "$1");
+                }
+            }
+            display.text(el.value.match(/\S+/g).length);
+        } else {
+            display.text("0");
+        }
+    }
 });
+
+/* Style for the word count container */
+.word-count-container {
+    font-size: 0.8em;
+    float: right;
+}
+
+/* Style for the word count label */
+.word-count-label {
+    margin-right: 5px;
+}
