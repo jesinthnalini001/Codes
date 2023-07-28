@@ -1,29 +1,35 @@
 Qualtrics.SurveyEngine.addOnload(function() {
-  // Replace "QR~QID616" with the actual textarea ID
-  var $textArea = jQuery("#QR~QID616");
-  var $charCountSpan = jQuery("#QID616-RemainingChars");
+  // Create a placeholder to display the reminder message
+  var char_rem = document.createElement("p");
+  char_rem.setAttribute("id", "char_reminder");
+  char_rem.setAttribute("style", "color: LightGray;");
+  this.getChoiceContainer().parentNode.appendChild(char_rem);
+});
 
-  // Initially hide the character count
-  $charCountSpan.hide();
+Qualtrics.SurveyEngine.addOnReady(function() {
+  var that = this;
+  var qid = this.questionId;
+  var inputSelector = 'QR~' + qid;
 
-  $textArea.on("input", function() {
-    var text = $textArea.val();
-    var charCount = text.length;
-    var remainingChars = 300 - charCount;
+  // Set the default max_len to 300 characters
+  var max_len = 300;
 
-    if (charCount >= 10) {
-      // Show the character count if 10 or more characters have been entered
-      $charCountSpan.show();
-      // Set the "aria-live" attribute to "polite" to announce changes to the live region
-      $charCountSpan.attr("aria-live", "polite");
-    } else {
-      // Hide the character count if fewer than 10 characters have been entered
-      $charCountSpan.hide();
-      // Set the "aria-live" attribute to "off" to stop announcements when hidden
-      $charCountSpan.attr("aria-live", "off");
+  // Get the input element using the appropriate selector
+  var inputElement = document.querySelector('input[name="' + inputSelector + '"]');
+
+  inputElement.oninput = function() {
+    limited();
+  };
+
+  function limited() {
+    var curr_len = inputElement.value.length;
+    var reminder = "";
+
+    if (curr_len > 10) {
+      var rem_len = max_len - curr_len;
+      reminder = rem_len + "/300 characters remaining";
     }
 
-    // Update the remaining character count
-    $charCountSpan.find("span[data-runtime-text='runtime.CharsRemaining']").text(remainingChars);
-  });
+    document.querySelector("#char_reminder").innerText = reminder;
+  }
 });
