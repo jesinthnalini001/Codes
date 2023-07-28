@@ -1,50 +1,25 @@
 Qualtrics.SurveyEngine.addOnload(function() {
-    // Set the maximum number of words allowed, 0 means no limit
-    var maxWords = 0;
+  // Replace "QR~QID616" with the actual textarea ID
+  var $textArea = jQuery("#QR~QID616");
+  var $charCountSpan = jQuery("#QID616-RemainingChars");
 
-    // Get the question container using jQuery
-    var q = jQuery("#" + this.questionId);
+  // Initially hide the character count
+  $charCountSpan.hide();
 
-    // Find the text input field within the question container
-    var input = q.find(".InputText");
+  $textArea.on("input", function() {
+    var text = $textArea.val();
+    var charCount = text.length;
+    var remainingChars = 300 - charCount;
 
-    // Add a word count container after the text input
-    input.after("<div class='word-count-container'><span class='word-count-label'>Word count:</span><span class='wordCount' aria-hidden='true'>0</span><span class='maxWords'></span></div>");
-
-    // Find the word count display element
-    var display = q.find(".wordCount");
-
-    // If there's a maximum word limit, display it
-    if (maxWords > 0) {
-        q.find('.maxWords').text("/" + maxWords);
+    if (charCount >= 10) {
+      // Show the character count if 10 or more characters have been entered
+      $charCountSpan.show();
+    } else {
+      // Hide the character count if fewer than 10 characters have been entered
+      $charCountSpan.hide();
     }
 
-    // Count words on page load
-    countWords(input.get(0));
-
-    // Bind the countWords function to the input event
-    input.on("input", function() {
-        countWords(this);
-    });
-
-    // Remove leading and trailing whitespace on blur
-    input.blur(function() {
-        this.value = this.value.trim();
-    });
-
-    function countWords(el) {
-        if (el.value.length > 0) {
-            if (maxWords > 0) {
-                if (el.value.match(/\S+/g).length > maxWords) {
-                    el.value = el.value.replace(/(\s+)\S+$/, "$1");
-                }
-            }
-            var wordCount = el.value.match(/\S+/g).length;
-            display.text(wordCount);
-            display.attr("aria-live", "polite"); // Announce word count changes
-        } else {
-            display.text("0");
-            display.attr("aria-live", "off"); // Disable aria-live if word count is zero
-        }
-    }
+    // Update the remaining character count
+    $charCountSpan.find("span[data-runtime-text='runtime.CharsRemaining']").text(remainingChars);
+  });
 });
