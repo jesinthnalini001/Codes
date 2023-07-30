@@ -1,30 +1,40 @@
 Qualtrics.SurveyEngine.addOnload(function() {
 
-    var maxCharacters = 300; // update as needed, 0 = no limit
-    var q = jQuery("#"+this.questionId); 
-    var input = q.find(".InputText"); 
-    input.after("<div style='font-size: 0.8em; float: right;'>Characters remaining: <span class='charRemaining'></span><span class='maxCharacters'></span></div>"); 
-    var charRemainingDisplay = q.find(".charRemaining");
+    var maxCharacters = 300; // Maximum allowed characters, update as needed, 0 = no limit
+    var minCharactersToShow = 20; // Minimum characters required to show the character count element
+    var q = jQuery("#"+this.questionId); // Get the question element
+    var input = q.find(".InputText"); // Find the input element within the question
     
-    if (maxCharacters > 0) {
-        q.find('.maxCharacters').text("/" + maxCharacters);
-    }
+    var charRemainingDisplay = null; // Variable to store the character count display element
+    
+    input.on("input", function() {
+        if (charRemainingDisplay === null && input.val().length >= minCharactersToShow) {
+            // If the character count display is not yet shown and the user has entered at least minCharactersToShow characters
+            charRemainingDisplay = jQuery("<div style='font-size: 0.8em; float: right;'>Characters remaining: <span class='charRemaining'></span><span class='maxCharacters'></span></div>");
+            input.after(charRemainingDisplay); // Add the character count display after the input element
+            if (maxCharacters > 0) {
+                q.find('.maxCharacters').text("/" + maxCharacters); // If there is a character limit, display it in the UI
+            }
+        }
 
-    countCharacters(input.get(0)); 
-    input.on("input", function() { countCharacters(this) }); 
-    input.blur(function() { this.value = this.value.trim(); });
+        countCharacters(this); // Calculate and display the character count
+    }); 
+
+    input.blur(function() { this.value = this.value.trim(); }); // Trim any leading or trailing whitespace when the input loses focus
 
     function countCharacters(el) {
-        var charCount = el.value.length;
+        var charCount = el.value.length; // Get the current character count from the input value
 
-        if (maxCharacters > 0) {
-            var remainingChars = maxCharacters - charCount;
-            charRemainingDisplay.text(remainingChars >= 0 ? remainingChars : 0);
-            if (charCount > maxCharacters) {
-                el.value = el.value.slice(0, maxCharacters);
+        if (charRemainingDisplay !== null) { // Check if the character count display is visible
+            if (maxCharacters > 0) {
+                var remainingChars = maxCharacters - charCount; // Calculate the remaining characters
+                charRemainingDisplay.find('.charRemaining').text(remainingChars >= 0 ? remainingChars : 0); // Display the remaining characters in the UI, ensure it's not negative
+                if (charCount > maxCharacters) {
+                    el.value = el.value.slice(0, maxCharacters); // If the user exceeds the character limit, truncate the input value
+                }
+            } else {
+                charRemainingDisplay.find('.charRemaining').text(charCount); // If there's no character limit, simply display the character count
             }
-        } else {
-            charRemainingDisplay.text(charCount);
         }
     }
 });
