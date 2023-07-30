@@ -1,42 +1,30 @@
 Qualtrics.SurveyEngine.addOnload(function() {
-  // Create a placeholder to display the reminder message
-  var char_rem = document.createElement("p");
-  char_rem.setAttribute("id", "char_reminder");
-  char_rem.setAttribute("style", "color: LightGray;");
-  this.getChoiceContainer().parentNode.appendChild(char_rem);
-});
 
-Qualtrics.SurveyEngine.addOnReady(function() {
-  var that = this;
-  var qid = this.questionId;
-  var inputSelector = 'QR~' + qid;
-
-  // Set the default max_len to 300 characters
-  var max_len = 300;
-
-  // Get the input element using the appropriate selector
-  var inputElement = document.querySelector('input[name="' + inputSelector + '"]');
-
-  // Check if the input element exists before adding the event listener
-  if (inputElement) {
-    inputElement.addEventListener('input', function() {
-      limited();
-    });
-  }
-
-  function limited() {
-    if (!inputElement) {
-      return; // Exit the function if the input element doesn't exist
+    var maxCharacters = 300; // update as needed, 0 = no limit
+    var q = jQuery("#"+this.questionId); 
+    var input = q.find(".InputText"); 
+    input.after("<div style='font-size: 0.8em; float: right;'>Characters remaining: <span class='charRemaining'></span><span class='maxCharacters'></span></div>"); 
+    var charRemainingDisplay = q.find(".charRemaining");
+    
+    if (maxCharacters > 0) {
+        q.find('.maxCharacters').text("/" + maxCharacters);
     }
 
-    var curr_len = inputElement.value.length;
-    var reminder = "";
+    countCharacters(input.get(0)); 
+    input.on("input", function() { countCharacters(this) }); 
+    input.blur(function() { this.value = this.value.trim(); });
 
-    if (curr_len > 10) {
-      var rem_len = max_len - curr_len;
-      reminder = rem_len + "/300 characters remaining";
+    function countCharacters(el) {
+        var charCount = el.value.length;
+
+        if (maxCharacters > 0) {
+            var remainingChars = maxCharacters - charCount;
+            charRemainingDisplay.text(remainingChars >= 0 ? remainingChars : 0);
+            if (charCount > maxCharacters) {
+                el.value = el.value.slice(0, maxCharacters);
+            }
+        } else {
+            charRemainingDisplay.text(charCount);
+        }
     }
-
-    document.querySelector("#char_reminder").innerText = reminder;
-  }
 });
