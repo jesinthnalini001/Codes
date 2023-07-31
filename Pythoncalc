@@ -1,0 +1,35 @@
+import pandas as pd
+
+# Assuming 'original_df' is your original DataFrame with all the required columns
+# Extracting only the required columns
+selected_columns = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12', 'Q13']
+df = original_df[selected_columns]
+
+# Assigning float values to variables
+Quality = 0.19
+Depth = 0.15
+Breadth = 0.11
+Issues = 0.1
+Cost = 60.08
+UI = 0.08
+Inter = 0.06
+Deadlines = 0.07
+Adaptability = 0.09
+CustomerService = 0.07
+
+# Perform the calculations for each set (1 to 10) and store results in separate columns
+for i in range(1, 11):
+    df[f'Calc1_V{i}'] = ((df['Q1'] + df['Q2']) / 2) * Quality
+    df[f'Calc2_V{i}'] = ((df['Q9'] + df['Q20']) / 2) * Depth
+    df[f'Calc3_V{i}'] = ((df['Q3'] + df['Q4']) / 2) * Breadth
+    df[f'Calc4_V{i}'] = df['Q5'] * Issues
+    df[f'Calc5_V{i}'] = df['Q7'] * Cost
+    df[f'Calc6_V{i}'] = df['Q8'] * UI
+    df[f'Calc7_V{i}'] = df['Q9'] * Inter
+    df[f'Calc8_V{i}'] = df['Q10'] * Deadlines
+    df[f'Calc9_V{i}'] = ((df['Q11'] + df['Q12']) / 2) * Adaptability
+    df[f'Calc10_V{i}'] = df['Q13'] * CustomerService
+    df[f'Overall_V{i}'] = df[[f'Calc1_V{i}', f'Calc2_V{i}', f'Calc3_V{i}', f'Calc4_V{i}', f'Calc5_V{i}', f'Calc6_V{i}', f'Calc7_V{i}', f'Calc8_V{i}', f'Calc9_V{i}', f'Calc10_V{i}']].sum(axis=1)
+
+# Displaying the final DataFrame with the results for all sets
+print(df)
