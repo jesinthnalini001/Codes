@@ -1,70 +1,21 @@
-/* Styles for when a SingleAnswer label is checked or focused */
-.Skin label.SingleAnswer.q-checked {
-	color: #006ee3 !important;
-	outline: 2px solid #006ee3 !important;
-}
-
-/* Styles for when hovering over a SingleAnswer label */
-.Skin label.SingleAnswer:hover {
-	font-weight: bold !important;
-	background: #005aba !important;
-	color: #ffffff !important;
-}
-
-/* Styles for when a SingleAnswer label is checked or focused */
-.Skin label.MultipleAnswer.q-checked {
-	color: #006ee3 !important;
-	outline: 2px solid #006ee3 !important;
-}
-
-/* Styles for when hovering over a MultiAnswer label */
-.Skin label.MultipleAnswer:hover {
-	font-weight: bold !important;
-	background: #005aba !important;
-	color: #ffffff !important;
-}
-
-/* Styles for when a label is focused */
-.Skin label.q-focused {
-	font-weight: bold !important;
-	color: #ffffff !important;
-}
-
-/* Grey line between options */
-.Skin label.q-checkbox:hover,
-.Skin label.q-checkbox:focus,
-.Skin label.q-checkbox:focus-within {
-	outline: 2px solid #006de3;
-	outline-offset: 3px;
-}
-
-.Skin label.q-checkbox.q-focused,
-.Skin label.q-radio.q-focused {
-	outline: thick solid grey !important;
-}
-
-.q-focused {
-	outline: thick solid grey !important;
-}
-
-.Skin label.q-checkbox.q-checked,
-.Skin label.q-radio.q-checked {
-	outline: none !important;
-}
-
-.Skin label.q-checked>span:before,
-.Skin label.q-checkbox.q-checked {
-	border: 5px solid #006de3 !important;
-	border-block: inherit;
-	outline: thick solid grey !important;
-}
-/* Grey line between options ends */
-
-/* Explanation:
-- The ".SingleAnswer.q-checked" styles apply when a SingleAnswer label is checked or focused. It sets the color to a specific blue (#006ee3) and adds an outline.
-- The ".SingleAnswer:hover" styles apply when hovering over a SingleAnswer label. It sets the font weight, background color, and text color.
-- The ".MultipleAnswer:hover" styles apply when hovering over a MultiAnswer label. It sets the font weight, background color, and text color.
-- The ".q-focused" styles apply when any label is focused. It sets the font weight and text color.
-- The "!important" rule ensures that these styles override any other conflicting styles in the survey theme.
-*/
-/* On Focus end */
+<div class="accordion-item">
+    <div class="accordion-header" id="headingOne">
+        <h2 class="mb-0">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="feather feather-info">
+                        <circle r="10" cy="12" cx="12"></circle>
+                        <line y2="12" y1="16" x2="12" x1="12"></line>
+                        <line y2="8" y1="8" x2="12.01" x1="12"></line>
+                    </svg>
+                </span>
+                Senior Leaders are doing a good job of role modelling our Mindset
+            </button>
+        </h2>
+    </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            Senior Leaders and function executives, typically Managing Director level.
+        </div>
+    </div>
+</div>
