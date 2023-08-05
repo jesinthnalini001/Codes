@@ -1,51 +1,42 @@
-<div class="reference-item">Question text &nbsp;<button type="button" class="reference-trigger" aria-describedby="reference-description"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 16 16" height="16" fill="currentColor" class="bi bi-info-circle"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path> <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path> </svg></button>
-<div id="reference-description" class="reference-popup">
-<div class="tooltip-content">
-<div class="tooltip-title">HTML</div>
+// Define the function to handle single-select questions
+function handleSingleSelect() {
+  var q = jQuery(this.questionContainer);
+  var qid = q.attr('id'); // Get the question ID from the container
+  var qobj = Qualtrics.SurveyEngine.QuestionInfo[qid];
 
-<div class="tooltip-description">Structure of content on the web</div>
-</div>
-</div>
-</div>
-<style type="text/css">.reference-item {
-    position: relative;
-    display: inline-block;
-  }
+  var scid = q.find("[type=radio]:checked").attr("choiceid");
 
-  .reference-trigger {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    text-decoration: underline;
-  }
+  // Click event listener for mouse clicks
+  q.find("[type=radio]").click(function() {
+    var cid = this.getAttribute("choiceid");
 
-  .reference-popup {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Increase z-index for better visibility */
-  }
+    if (cid === scid) {
+      qobj.setChoiceValue(cid, false);
+      scid = 0;
+    } else {
+      scid = cid;
+    }
+  });
 
-  .reference-trigger:hover + .reference-popup,
-  .reference-trigger:focus + .reference-popup {
-    display: block;
-  }
+  // Keydown event listener for keyboard input
+  q.find("[type=radio]").keydown(function(event) {
+    // Check if the Spacebar key (keyCode 32) or Enter key (keyCode 13) is pressed
+    if (event.keyCode === 32 || event.keyCode === 13) {
+      var cid = this.getAttribute("choiceid");
+      var selectedChoices = qobj.getSelectedChoices();
 
-  .tooltip-content {
-    display: flex;
-    flex-direction: column;
-  }
+      // Toggle the selection state of the radio button
+      qobj.setChoiceValue(cid, selectedChoices.includes(cid));
 
-  .tooltip-title {
-    font-weight: bold;
-  }
+      // Update the stored choice id based on the new selection state
+      scid = selectedChoices.includes(cid) ? cid : 0;
 
-  .tooltip-description {
-    color: #666;
-  }
-</style>
+      // Prevent the default behavior of the Spacebar or Enter key
+      event.preventDefault();
+    }
+  });
+}
+
+Qualtrics.SurveyEngine.addOnload(function() {
+  handleSingleSelect.call(this);
+});
