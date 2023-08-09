@@ -1,31 +1,32 @@
-Qualtrics.SurveyEngine.addOnload(function() {
-    const freetextQuestionId = 'QID3'; // Replace with your freetext question ID
-    const freetextInput = jQuery(`#${freetextQuestionId} .InputText`);
-    const alertTrigger = jQuery('<button id="liveAlertBtn">Trigger Alert</button>');
+I've created a separate theme for "Your View" with the following details:
 
-    if (freetextInput.length) {
-        freetextInput.after(alertTrigger);
+Theme:
 
-        alertTrigger.on('click', function() {
-            const response = freetextInput.val();
-            const wordLimit = 300;
+Button Style:
+Default state
+Mouse hover state
+Clicked state
+Focused keyboard tab
+Questions:
 
-            if (response.split(/\s+/).length > wordLimit) {
-                appendAlert('Your response is too long. Please limit your response to ' + wordLimit + ' words.', 'danger');
-            } else {
-                appendAlert('Nice, you triggered this alert message!', 'success');
-            }
-        });
-    }
+Mouse hover state
+Focused keyboard tab
+Checked state
+Border outline for checkbox or radio button
+Flexible Rendering:
+Up to 400% scaling while maintaining correct rendering.
 
-    function appendAlert(message, type) {
-        const wrapper = jQuery(
-            `<div class="alert alert-${type} alert-dismissible" role="alert">
-                <div>${message}</div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>`
-        );
+Survey Theme:
 
-        jQuery('.Skin .QuestionBody').append(wrapper);
-    }
-});
+Progress bar design
+Tooltip implementation
+Functionality:
+
+Single select uncheck functionality
+Modified freetext question border color change when reaching 300 characters
+Addition of an error message at the bottom for freetext questions when they reach 300 characters
+We are now at the stage of requesting the team to test the link and provide their feedback on the above changes. These points summarize the recent updates made to the project. We are committed to refining and enhancing the user experience based on the team's feedback.
+
+
+
+
