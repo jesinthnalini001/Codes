@@ -1,51 +1,32 @@
-import pandas as pd
+def check_nested_table(html):
+    stack = []
+    index = 0
 
-# Assuming 'original_df' is your original DataFrame with all the required columns
+    while index < len(html):
+        tag_start = html.find("<", index)
+        if tag_start == -1:
+            break
 
-# Define the mappings of question IDs to variables for each set
-# Replace 'Q1', 'Q2', etc. with the actual question IDs for each set
-# Replace 'Quality', 'Depth', etc. with the actual variable names for each set
-variable_mappings = [
-    {'Quality_qV1': ['Q1', 'Q2'], 'Depth_qV1': ['Q3', 'Q4'], 'Breadth_qV1': ['Q5', 'Q6'], ...},
-    {'Quality_qV2': ['Q10', 'Q23'], 'Depth_qV2': ['Q11', 'Q24'], 'Breadth_qV2': ['Q12', 'Q25'], ...},
-    # Add the mappings for other sets here
-    # ...
-]
+        tag_end = html.find(">", tag_start)
+        if tag_end == -1:
+            break
 
-# Assigning float values to variables
-Quality = 0.19
-Depth = 0.15
-Breadth = 0.11
-Issues = 0.1
-Cost = 60.08
-UI = 0.08
-Inter = 0.06
-Deadlines = 0.07
-Adaptability = 0.09
-CustomerService = 0.07
+        tag = html[tag_start:tag_end + 1]
+        index = tag_end + 1
 
-# Perform the calculations for each set (1 to 10) and store results in separate columns
-for i, var_mapping in enumerate(variable_mappings, 1):
-    df_subset = original_df[var_mapping.values()]
-    
-    df_subset[f'Calc1_V{i}'] = ((df_subset[var_mapping['Quality_qV1']].sum(axis=1) / 2) * Quality
-    df_subset[f'Calc2_V{i}'] = ((df_subset[var_mapping['Depth_qV1']].sum(axis=1) / 2) * Depth
-    df_subset[f'Calc3_V{i}'] = ((df_subset[var_mapping['Breadth_qV1']].sum(axis=1) / 2) * Breadth
-    df_subset[f'Calc4_V{i}'] = df_subset[var_mapping['Issues_qV1']] * Issues
-    df_subset[f'Calc5_V{i}'] = df_subset[var_mapping['Cost_qV1']] * Cost
-    df_subset[f'Calc6_V{i}'] = df_subset[var_mapping['UI_qV1']] * UI
-    df_subset[f'Calc7_V{i}'] = df_subset[var_mapping['Inter_qV1']] * Inter
-    df_subset[f'Calc8_V{i}'] = df_subset[var_mapping['Deadlines_qV1']] * Deadlines
-    df_subset[f'Calc9_V{i}'] = ((df_subset[var_mapping['Adaptability_qV1']].sum(axis=1) / 2) * Adaptability
-    df_subset[f'Calc10_V{i}'] = df_subset[var_mapping['CustomerService_qV1']] * CustomerService
-    
-    df_subset[f'Overall_V{i}'] = df_subset[
-        [f'Calc1_V{i}', f'Calc2_V{i}', f'Calc3_V{i}', f'Calc4_V{i}', f'Calc5_V{i}',
-         f'Calc6_V{i}', f'Calc7_V{i}', f'Calc8_V{i}', f'Calc9_V{i}', f'Calc10_V{i}']
-    ].sum(axis=1)
+        if tag.startswith("</"):
+            if not stack or stack[-1] != tag[2:-1]:
+                return False
+            stack.pop()
+        elif tag.startswith("<table"):
+            stack.append("table")
 
-    # Concatenate the results back to the original DataFrame
-    original_df = pd.concat([original_df, df_subset], axis=1)
+    return len(stack) == 0
 
-# Displaying the final DataFrame with the results for all sets
-print(original_df)
+# Example HTML content
+html_content = "<table><tr><td><table><tr><td></td></tr></table></td></tr></table>"
+
+if check_nested_table(html_content):
+    print("Nested table tags are properly closed.")
+else:
+    print("Nested table tags are not properly closed.")
