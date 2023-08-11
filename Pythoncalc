@@ -1,34 +1,34 @@
 from bs4 import BeautifulSoup
 
-def check_nested_table(html):
+def find_improperly_closed_tables(html):
     try:
         soup = BeautifulSoup(html, 'html.parser')
-        # Find all table tags
-        table_tags = soup.find_all('table')
         stack = []
 
-        for tag in table_tags:
+        for index, tag in enumerate(soup.find_all(['table', '/table'])):
             if tag.name == 'table':
-                stack.append(tag)
+                stack.append(index)
             elif tag.name == '/table':
                 if not stack:
-                    return False
-                if tag == stack[-1]:
-                    stack.pop()
-                else:
-                    return False
-        
-        return len(stack) == 0
+                    return index
+                stack.pop()
+
+        if stack:
+            return stack[-1]
+
+        return None
+
     except Exception as e:
         print("Error parsing HTML:", e)
-        return False
+        return None
 
 # Read HTML content from a text file
 file_path = "path/to/your/file.html"
 with open(file_path, "r") as file:
     html_content = file.read()
 
-if check_nested_table(html_content):
-    print("Nested table tags are properly closed.")
+position = find_improperly_closed_tables(html_content)
+if position is not None:
+    print(f"Nested table tag at position {position} is not properly closed.")
 else:
-    print("Nested table tags are not properly closed.")
+    print("No improperly closed nested table tags found.")
