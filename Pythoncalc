@@ -1,30 +1,32 @@
+from bs4 import BeautifulSoup
+
 def check_nested_table(html):
-    stack = []
-    index = 0
+    try:
+        soup = BeautifulSoup(html, 'html.parser')
+        # Find all table tags
+        table_tags = soup.find_all('table')
+        stack = []
 
-    while index < len(html):
-        tag_start = html.find("<", index)
-        if tag_start == -1:
-            break
+        for tag in table_tags:
+            if tag.name == 'table':
+                stack.append(tag)
+            elif tag.name == '/table':
+                if not stack:
+                    return False
+                if tag == stack[-1]:
+                    stack.pop()
+                else:
+                    return False
+        
+        return len(stack) == 0
+    except Exception as e:
+        print("Error parsing HTML:", e)
+        return False
 
-        tag_end = html.find(">", tag_start)
-        if tag_end == -1:
-            break
-
-        tag = html[tag_start:tag_end + 1]
-        index = tag_end + 1
-
-        if tag.startswith("</"):
-            if not stack or stack[-1] != tag[2:-1]:
-                return False
-            stack.pop()
-        elif tag.startswith("<table"):
-            stack.append("table")
-
-    return len(stack) == 0
-
-# Example HTML content
-html_content = "<table><tr><td><table><tr><td></td></tr></table></td></tr></table>"
+# Read HTML content from a text file
+file_path = "path/to/your/file.html"
+with open(file_path, "r") as file:
+    html_content = file.read()
 
 if check_nested_table(html_content):
     print("Nested table tags are properly closed.")
