@@ -1,42 +1,25 @@
-// Define the function to handle single-select questions
-function handleSingleSelect() {
-  var q = jQuery(this.questionContainer);
-  var qid = q.attr('id'); // Get the question ID from the container
-  var qobj = Qualtrics.SurveyEngine.QuestionInfo[qid];
+import os
+import pandas as pd
 
-  var scid = q.find("[type=radio]:checked").attr("choiceid");
+# Directory containing the CSV files
+directory = '/path/to/csv/files/'
 
-  // Click event listener for mouse clicks
-  q.find("[type=radio]").click(function() {
-    var cid = this.getAttribute("choiceid");
+# Get a list of CSV files that start with "Grou["
+csv_files = [filename for filename in os.listdir(directory) if filename.startswith("Grou[") and filename.endswith('.csv')]
 
-    if (cid === scid) {
-      qobj.setChoiceValue(cid, false);
-      scid = 0;
-    } else {
-      scid = cid;
-    }
-  });
+# Initialize an empty list to store DataFrames
+dataframes = []
 
-  // Keydown event listener for keyboard input
-  q.find("[type=radio]").keydown(function(event) {
-    // Check if the Spacebar key (keyCode 32) or Enter key (keyCode 13) is pressed
-    if (event.keyCode === 32 || event.keyCode === 13) {
-      var cid = this.getAttribute("choiceid");
-      var selectedChoices = qobj.getSelectedChoices();
+# Iterate through the CSV files and read them into DataFrames
+for csv_file in csv_files:
+    file_path = os.path.join(directory, csv_file)
+    df = pd.read_csv(file_path)
+    dataframes.append(df)
 
-      // Toggle the selection state of the radio button
-      qobj.setChoiceValue(cid, selectedChoices.includes(cid));
+# Combine the DataFrames into one
+combined_data = pd.concat(dataframes, ignore_index=True)
 
-      // Update the stored choice id based on the new selection state
-      scid = selectedChoices.includes(cid) ? cid : 0;
-
-      // Prevent the default behavior of the Spacebar or Enter key
-      event.preventDefault();
-    }
-  });
-}
-
-Qualtrics.SurveyEngine.addOnload(function() {
-  handleSingleSelect.call(this);
-});
+# Save the combined data to a new CSV file
+output_file = '/path/to/output/combined_data.csv'
+combined_data.to_csv(output_file, index=False)
+print(f"Combined data saved to {output_file}")
